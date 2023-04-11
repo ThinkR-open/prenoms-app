@@ -1,0 +1,13 @@
+Package: prenomsapp
+Title: An app for browsing french baby names
+Version: 0.0.0.9000
+Authors@R: person('Colin', 'Fay', email = 'contact@colinfay.me', role = c('cre', 'aut'))
+Description: An app for browsing french baby names.
+License: MIT + file LICENSE
+Imports: 
+    config,
+    golem,
+    shiny
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
