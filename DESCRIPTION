@@ -1,13 +1,36 @@
 Package: prenomsapp
 Title: An app for browsing french baby names
 Version: 0.0.0.9000
-Authors@R: person('Colin', 'Fay', email = 'contact@colinfay.me', role = c('cre', 'aut'))
+Authors@R:
+    person("Colin", "Fay", , "contact@colinfay.me", role = c("cre", "aut"))
 Description: An app for browsing french baby names.
 License: MIT + file LICENSE
-Imports: 
+Depends:
+    R (>= 2.10)
+Imports:
+    cachem,
     config,
+    dplyr,
+    DT,
+    dygraphs,
+    ggplot2,
     golem,
-    shiny
+    markdown,
+    memoise,
+    plotly,
+    prenoms,
+    shiny,
+    shinyalert,
+    skeleton (>= 0.0.0.9000),
+    stats,
+    tidyr
+Suggests:
+    spelling,
+    testthat (>= 3.0.0)
+Remotes: 
+    colinfay/skeleton
+Config/testthat/edition: 3
 Encoding: UTF-8
+Language: en-US
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.3

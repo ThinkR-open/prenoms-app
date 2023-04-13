@@ -1,0 +1,65 @@
+---
+title: "flat_by_dep.Rmd empty"
+output: html_document
+editor_options:
+  chunk_output_type: console
+---
+
+```{r development, include=FALSE}
+library(testthat)
+```
+
+```{r development-load}
+# Load already included functions if relevant
+pkgload::load_all(export_all = FALSE)
+```
+
+# by_dep
+
+```{r function-by_dep}
+#' Create a dygraph by department
+#'
+#' @filename fct_by_dep
+#' @noRd
+#' @param dep numeric department number
+#' @param date numeric vector of length 2
+#' @param group_by_sex logical wether or not to group by sex
+by_dep <- function(
+  dep,
+  date,
+  group_by_sex = FALSE
+) {
+  f <- prenoms::prenoms |>
+    dplyr::filter(.data$year >= date[1], .data$year <= date[2]) |>
+    dplyr::filter(.data$dpt == dep)
+  if (group_by_sex) {
+    f <- f |>
+      dplyr::group_by(.data$year, .data$sex) |>
+      dplyr::summarise(total = sum(.data$n)) |>
+      tidyr::spread(key = .data$sex, value = .data$total)
+  } else {
+    f <- f |>
+      dplyr::group_by(.data$year) |>
+      dplyr::summarise(total = sum(.data$n))
+  }
+   dygraphs::dygraph(f)
+}
+```
+
+```{r examples-by_dep}
+by_dep(
+  61,
+  date = c(1902, 1903)
+)
+```
+
+```{r tests-by_dep}
+test_that("by_dep works", {
+  res <- by_dep(
+    61,
+    date = c(1902, 1903)
+  )
+  expect_true(inherits(res, "dygraphs"))
+})
+```
+

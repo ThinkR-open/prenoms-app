@@ -6,24 +6,61 @@
 #' @import skeleton
 #' @noRd
 app_ui <- function(request) {
+  # This is litterally to make attachment happy
+  markdown::smartypants("x")
   tagList(
     # Leave this function for adding external resources
     golem_add_external_resources(),
     # Your application UI logic
     sk_page(
-      sk_row(
-        h2("A dead simple, responsive boilerplate."),
+      sk_header(
+        h2(
+          sprintf("Baby names in France - %s:%s", min(prenoms::prenoms$year), max(prenoms::prenoms$year))
+        ),
       ),
       sk_nav(
         sk_nav_item(
           id = "one",
-          title = "ONE",
-          ui = mod_tab1_ui("tab1_1")
+          title = "Popularity over time",
+          ui = mod_pop_over_time_ui("tab1_1")
         ),
         sk_nav_item(
           id = "two",
-          title = "TWO",
-          ui = mod_tab2_ui("tab2_1")
+          title = "BIRTH",
+          ui = mod_birth_ui("birth_1")
+        ),
+        sk_nav_item(
+          id = "three",
+          title = "BY DEPARTEMENT",
+          ui = mod_by_dep_ui("by_dep_1")
+        ),
+        sk_nav_item(
+          id = "four",
+          title = "TOP NAMES",
+          ui = mod_top_names_ui("top_names_1")
+        ),
+        sk_nav_item(
+          id = "five",
+          title = "RAW DATA",
+          ui = mod_raw_data_ui("raw_data_1")
+        ),
+        sk_nav_item(
+          id = "six",
+          title = "ABOUT",
+          ui = tagList(
+            sk_col(
+              width = 6,
+              includeMarkdown(
+                app_sys("app/www/about.md")
+              )
+            ),
+            sk_col(
+              width = 6,
+              includeMarkdown(
+                app_sys("app/www/links.md")
+              )
+            )
+          )
         )
       )
     )
@@ -49,7 +86,7 @@ golem_add_external_resources <- function() {
     favicon(),
     bundle_resources(
       path = app_sys("app/www"),
-      app_title = "prenomsappreborn"
+      app_title = "{prenoms}"
     )
     # Add here other external resources
     # for example, you can add shinyalert::useShinyalert()

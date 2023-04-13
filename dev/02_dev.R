@@ -17,11 +17,59 @@
 ## Amend DESCRIPTION with dependencies read from package code parsing
 ## install.packages('attachment') # if needed.
 attachment::att_amend_desc()
+fusen::add_additional(flat_name = "mod_1")
+fusen::add_additional(flat_name = "by_dep")
+fusen::add_additional(flat_name = "fct_utils")
+fusen::add_additional(flat_name = "top_names")
+fusen::add_additional(flat_name = "raw_data")
+fusen::add_additional(flat_name = "dy_birth")
+
+rm(list = ls())
+{
+  comfy_inflate <- purrr::partial(
+    fusen::inflate,
+    check = FALSE,
+    vignette_name = NA
+  )
+  comfy_inflate(
+    flat_file = "dev/flat_by_dep.Rmd"
+  )
+  comfy_inflate(
+    flat_file = "dev/flat_dy_birth.Rmd"
+  )
+  comfy_inflate(
+    flat_file = "dev/flat_fct_utils.Rmd"
+  )
+  comfy_inflate(
+    flat_file = "dev/flat_mod_1.Rmd"
+  )
+
+  comfy_inflate(
+    flat_file = "dev/flat_top_names.Rmd"
+  )
+}
+grkstyle::grk_style_pkg()
+devtools::check()
+
 
 ## Add modules ----
 ## Create a module infrastructure in R/
-golem::add_module(name = "name_of_module1", with_test = TRUE) # Name of the module
-golem::add_module(name = "name_of_module2", with_test = TRUE) # Name of the module
+golem::add_module(
+  name = "birth",
+  with_test = TRUE
+) # Name of the module
+golem::add_module(
+  name = "by_dep",
+  with_test = TRUE
+) # Name of the module
+golem::add_module(
+  name = "top_names",
+  with_test = TRUE
+) # Name of the module
+golem::add_module(
+  name = "raw_data",
+  with_test = TRUE
+) # Name of the module
 
 ## Add helper functions ----
 ## Creates fct_* and utils_*
@@ -37,7 +85,7 @@ golem::add_sass_file("custom")
 
 ## Add internal datasets ----
 ## If you have data in your package
-usethis::use_data_raw(name = "my_dataset", open = FALSE)
+usethis::use_data_raw(name = "extracted", open = FALSE)
 
 ## Tests ----
 ## Add one line by test you want to create

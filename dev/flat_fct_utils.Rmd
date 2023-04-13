@@ -1,0 +1,321 @@
+---
+title: "flat_fct_utils.Rmd empty"
+output: html_document
+editor_options:
+  chunk_output_type: console
+---
+
+```{r development, include=FALSE}
+library(testthat)
+```
+
+```{r development-load}
+# Load already included functions if relevant
+pkgload::load_all(export_all = FALSE)
+```
+
+# fct_utils
+
+```{r function-fct_utils}
+#' fct_utils
+#'
+#' @noRd
+#' @filename fct_utils.R
+#' @param s character vector
+#' @param strict logical (default: FALSE)
+capwords <- function(s, strict = FALSE) {
+  cap <- function(s) {
+    paste(
+      toupper(
+        substring(s, 1, 1)
+      ),
+      {
+        s <- substring(s, 2)
+        if (strict) tolower(s) else s
+      },
+      sep = "",
+      collapse = " "
+    )
+  }
+  s <- tolower(s)
+  sapply(strsplit(s, split = " "), cap, USE.NAMES = !is.null(names(s)))
+}
+```
+
+```{r examples-fct_utils}
+capwords("COLIN")
+```
+
+```{r tests-fct_utils}
+test_that("capwords works", {
+  expect_equal(
+    capwords("COLIN"),
+    "Colin"
+  )
+})
+```
+
+# slider_date_prenoms
+
+```{r function-slider_date_prenoms}
+#' ui element for selecting in prenoms
+#'
+#' @noRd
+#' @filename fct_utils.R
+select_date_prenoms <- function(
+  id
+) {
+  shiny::selectInput(
+    id,
+    "Year:",
+    choices = 1900:2017,
+    selected = 1900
+  )
+}
+
+#' @noRd
+#' @filename fct_utils.R
+slider_date_prenoms <- function(
+  id
+) {
+  shiny::sliderInput(
+    id,
+    "Dates:",
+    value = c(
+      min(prenomsapp::prenoms_dates),
+      max(prenomsapp::prenoms_dates)
+    ),
+    min = min(prenomsapp::prenoms_dates),
+    max = max(prenomsapp::prenoms_dates)
+  )
+}
+```
+
+```{r example-slider_date_prenoms}
+slider_date_prenoms("pif")
+```
+
+```{r tests-slider_date_prenoms}
+test_that("slider_date_prenoms works", {
+  expect_true(
+    inherits(slider_date_prenoms, "function"))
+  expect_true(
+    grepl(
+      "shiny-input-container",
+      slider_date_prenoms("pif")
+    )
+  )
+  expect_true(
+    grepl(
+      "pif",
+      slider_date_prenoms("pif")
+    )
+  )
+})
+```
+
+# group_by_sex
+
+```{r function-group_by_sex}
+#' Group By sex checkbox
+#'
+#' @noRd
+#' @filename fct_utils.R
+group_by_sex <- function(
+  id
+){
+    shiny::checkboxInput(
+      id,
+      "Group by sex?",
+      FALSE
+    )
+}
+```
+
+```{r example-group_by_sex}
+group_by_sex("pif")
+```
+
+```{r tests-group_by_sex}
+test_that("group_by_sex works", {
+  expect_true(inherits(group_by_sex, "function"))
+  expect_true(
+    grepl(
+      "shiny-input-container",
+      group_by_sex("pif")
+    )
+  )
+  expect_true(
+    grepl(
+      "pif",
+      group_by_sex("pif")
+    )
+  )
+})
+```
+
+# filter_by_dep
+
+```{r function-filter_by_dep}
+#' Title
+#'
+#' @filename fct_utils.R
+#' @noRd
+filter_by_dep <- function(id){
+    checkboxInput(
+      id,
+      "Filter by department?",
+      FALSE
+    )
+}
+#' @noRd
+filter_by_sex <- function(id){
+    checkboxInput(
+      id,
+      "Filter by sex?",
+      FALSE
+    )
+}
+```
+
+```{r example-filter_by_dep}
+filter_by_dep("pif")
+```
+
+```{r tests-filter_by_dep}
+test_that("filter_by_dep works", {
+  expect_true(inherits(filter_by_dep, "function"))
+  expect_true(
+    grepl(
+      "shiny-input-container",
+      filter_by_dep("pif")
+    )
+  )
+  expect_true(
+    grepl(
+      "pif",
+      filter_by_dep("pif")
+    )
+  )
+})
+```
+
+# select_a_name
+
+```{r function-select_a_name}
+#' select_a_name
+#' @filename fct_utils.R
+#' @noRd
+select_a_name <- function(id){
+    textInput(
+      id,
+      "Name",
+      value = "Colin"
+    )
+}
+```
+
+```{r example-select_a_name}
+select_a_name("pif")
+```
+
+```{r tests-select_a_name}
+test_that("select_a_name works", {
+  expect_true(inherits(select_a_name, "function"))
+  expect_true(
+    grepl(
+      "shiny-input-container",
+      select_a_name("pif")
+    )
+  )
+  expect_true(
+    grepl(
+      "pif",
+      select_a_name("pif")
+    )
+  )
+})
+```
+
+# select_a_dep
+
+```{r function-select_a_dep}
+#' Title
+#' @filename fct_utils.R
+#' @noRd
+select_a_dep <- function(id){
+    selectInput(
+      id,
+      "Department",
+      choices = prenomsapp::deps
+    )
+}
+select_a_sex <- function(id) {
+  selectInput(
+    id,
+    "Sex",
+    choices = c("M", "F")
+  )
+}
+```
+
+```{r example-select_a_dep}
+select_a_dep("pif")
+```
+
+```{r tests-select_a_dep}
+test_that("select_a_dep works", {
+  expect_true(inherits(select_a_dep, "function"))
+  expect_true(
+    grepl(
+      "shiny-input-container",
+      select_a_dep("pif")
+    )
+  )
+  expect_true(
+    grepl(
+      "pif",
+      select_a_dep("pif")
+    )
+  )
+})
+```
+
+
+# render_button
+
+```{r function-render_button}
+#' render_button
+#' @filename fct_utils.R
+#' @noRd
+render_button <- function(id){
+    sk_button(
+      id,
+      "Render",
+      icon = icon("refresh")
+    )
+}
+```
+
+```{r example-render_button}
+render_button("pif")
+```
+
+```{r tests-render_button}
+test_that("render_button works", {
+  expect_true(inherits(render_button, "function"))
+  expect_true(
+    grepl(
+      "action-button",
+      render_button("pif")
+    )
+  )
+  expect_true(
+    grepl(
+      "pif",
+      render_button("pif")
+    )
+  )
+})
+```
+

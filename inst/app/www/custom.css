@@ -1,0 +1,15 @@
+.container {
+    max-width: 80%;
+    margin-bottom: 3em;
+}
+
+.header {
+   /* align center */
+    text-align: center;
+    margin-top: 3rem!important;
+}
+
+.shiny-input-container{
+   padding-top: 0.5em;
+   padding-bottom:0.5em;
+}

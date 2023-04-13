@@ -1,0 +1,48 @@
+---
+title: "flat_mod_1.Rmd empty"
+output: html_document
+editor_options:
+  chunk_output_type: console
+---
+
+```{r development, include=FALSE}
+library(testthat)
+```
+
+```{r development-load}
+# Load already included functions if relevant
+pkgload::load_all(export_all = FALSE)
+```
+
+# mod_1
+
+```{r function-mod_1}
+#' display_mod_1_dygraph
+#'
+#' @filename fct_display_mod_1_dygraph.R
+#' @noRd
+display_mod_1_dygraph <- function(dataset) {
+  dataset |>
+  dplyr::group_by(.data$year, .data$name) |>
+    dplyr::summarise(total = sum(.data$n)) |>
+    tidyr::spread(key = .data$name, value = .data$total) |>
+    dygraphs::dygraph()
+}
+```
+
+```{r examples-mod_1}
+prenoms::prenoms |>
+  dplyr::filter(name == "Colin") |>
+  display_mod_1_dygraph()
+```
+
+```{r tests-mod_1}
+test_that("display_mod_1_dygraph works", {
+  res <- prenoms::prenoms |>
+    dplyr::filter(name == "Colin") |>
+    display_mod_1_dygraph()
+  expect_true(inherits(res, "dygraphs"))
+})
+```
+
+
