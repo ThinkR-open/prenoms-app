@@ -8,52 +8,52 @@
 #' @import ggplot2
 #' @examples
 #' top_names(
-#'   1901
+#' 	1901
 #' )
 top_names <- function(
-  year_choice,
-  filter_by_dep = FALSE,
-  dep = "01",
-  filter_by_sex = FALSE,
-  sex_choice = "F"
-    ) {
-  gg_title_plot <- sprintf(
-    "Top 10, year %s",
-    year_choice
-  )
-  f <- prenoms::prenoms |>
-    dplyr::filter(.data$year == year_choice)
+	year_choice,
+	filter_by_dep = FALSE,
+	dep = "01",
+	filter_by_sex = FALSE,
+	sex_choice = "F"
+				) {
+	gg_title_plot <- sprintf(
+		"Top 10, year %s",
+		year_choice
+	)
+	f <- prenoms::prenoms |>
+		dplyr::filter(.data$year == year_choice)
 
-  if (filter_by_dep) {
-    f <- f |>
-      dplyr::filter(.data$dpt == dep)
+	if (filter_by_dep) {
+		f <- f |>
+			dplyr::filter(.data$dpt == dep)
 
-    gg_title_plot <- sprintf(
-      "%s, Department %s",
-      gg_title_plot,
-      dep
-    )
-  }
-  if (filter_by_sex) {
-    f <- f |>
-      dplyr::filter(.data$sex == sex_choice)
-    gg_title_plot <- sprintf(
-      "%s (%s)",
-      gg_title_plot,
-      sex_choice
-    )
-  }
+		gg_title_plot <- sprintf(
+			"%s, Department %s",
+			gg_title_plot,
+			dep
+		)
+	}
+	if (filter_by_sex) {
+		f <- f |>
+			dplyr::filter(.data$sex == sex_choice)
+		gg_title_plot <- sprintf(
+			"%s (%s)",
+			gg_title_plot,
+			sex_choice
+		)
+	}
 
-  res <- f |>
-    dplyr::group_by(.data$year, .data$name) |>
-    dplyr::summarise(total = sum(.data$n)) |>
-    dplyr::top_n(10, .data$total) |>
-    dplyr::arrange(dplyr::desc(.data$total)) |>
-    dplyr::mutate(name = stats::reorder(.data$name, .data$total)) |>
-    ggplot2::ggplot(ggplot2::aes(.data$name, .data$total)) +
-    ggplot2::geom_col(fill = "#4ba5a5") +
-    ggplot2::coord_flip() +
-    ggplot2::labs(x = "Name", title = gg_title_plot) +
-    ggplot2::theme_minimal()
-  plotly::ggplotly(res)
+	res <- f |>
+		dplyr::group_by(.data$year, .data$name) |>
+		dplyr::summarise(total = sum(.data$n)) |>
+		dplyr::top_n(10, .data$total) |>
+		dplyr::arrange(dplyr::desc(.data$total)) |>
+		dplyr::mutate(name = stats::reorder(.data$name, .data$total)) |>
+		ggplot2::ggplot(ggplot2::aes(.data$name, .data$total)) +
+		ggplot2::geom_col(fill = "#4ba5a5") +
+		ggplot2::coord_flip() +
+		ggplot2::labs(x = "Name", title = gg_title_plot) +
+		ggplot2::theme_minimal()
+	plotly::ggplotly(res)
 }

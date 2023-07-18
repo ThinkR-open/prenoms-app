@@ -6,12 +6,12 @@
 #' @noRd
 #' @examples
 #' prenoms::prenoms |>
-#'   dplyr::filter(name == "Colin") |>
-#'   display_mod_1_dygraph()
+#' 	dplyr::filter(name == "Colin") |>
+#' 	display_mod_1_dygraph()
 display_mod_1_dygraph <- function(dataset) {
-  dataset |>
-    dplyr::group_by(.data$year, .data$name) |>
-    dplyr::summarise(total = sum(.data$n)) |>
-    tidyr::spread(key = .data$name, value = .data$total) |>
-    dygraphs::dygraph()
+	dataset |>
+		dplyr::group_by(.data$year, .data$name) |>
+		dplyr::summarise(total = sum(.data$n)) |>
+		tidyr::spread(key = .data$name, value = .data$total) |>
+		dygraphs::dygraph()
 }

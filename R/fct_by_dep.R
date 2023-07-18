@@ -9,26 +9,26 @@
 #' @param group_by_sex logical wether or not to group by sex
 #' @examples
 #' by_dep(
-#'   61,
-#'   date = c(1902, 1903)
+#' 	61,
+#' 	date = c(1902, 1903)
 #' )
 by_dep <- function(
-  dep,
-  date,
-  group_by_sex = FALSE
-    ) {
-  f <- prenoms::prenoms |>
-    dplyr::filter(.data$year >= date[1], .data$year <= date[2]) |>
-    dplyr::filter(.data$dpt == dep)
-  if (group_by_sex) {
-    f <- f |>
-      dplyr::group_by(.data$year, .data$sex) |>
-      dplyr::summarise(total = sum(.data$n)) |>
-      tidyr::spread(key = .data$sex, value = .data$total)
-  } else {
-    f <- f |>
-      dplyr::group_by(.data$year) |>
-      dplyr::summarise(total = sum(.data$n))
-  }
-  dygraphs::dygraph(f)
+	dep,
+	date,
+	group_by_sex = FALSE
+				) {
+	f <- prenoms::prenoms |>
+		dplyr::filter(.data$year >= date[1], .data$year <= date[2]) |>
+		dplyr::filter(.data$dpt == dep)
+	if (group_by_sex) {
+		f <- f |>
+			dplyr::group_by(.data$year, .data$sex) |>
+			dplyr::summarise(total = sum(.data$n)) |>
+			tidyr::spread(key = .data$sex, value = .data$total)
+	} else {
+		f <- f |>
+			dplyr::group_by(.data$year) |>
+			dplyr::summarise(total = sum(.data$n))
+	}
+	dygraphs::dygraph(f)
 }

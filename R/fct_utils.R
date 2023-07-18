@@ -9,21 +9,21 @@
 #' @examples
 #' capwords("COLIN")
 capwords <- function(s, strict = FALSE) {
-  cap <- function(s) {
-    paste(
-      toupper(
-        substring(s, 1, 1)
-      ),
-      {
-        s <- substring(s, 2)
-        if (strict) tolower(s) else s
-      },
-      sep = "",
-      collapse = " "
-    )
-  }
-  s <- tolower(s)
-  sapply(strsplit(s, split = " "), cap, USE.NAMES = !is.null(names(s)))
+	cap <- function(s) {
+		paste(
+			toupper(
+				substring(s, 1, 1)
+			),
+			{
+				s <- substring(s, 2)
+				if (strict) tolower(s) else s
+			},
+			sep = "",
+			collapse = " "
+		)
+	}
+	s <- tolower(s)
+	sapply(strsplit(s, split = " "), cap, USE.NAMES = !is.null(names(s)))
 }
 
 #' Title
@@ -33,19 +33,19 @@ capwords <- function(s, strict = FALSE) {
 #' @examples
 #' filter_by_dep("pif")
 filter_by_dep <- function(id) {
-  checkboxInput(
-    id,
-    "Filter by department?",
-    FALSE
-  )
+	checkboxInput(
+		id,
+		"Filter by department?",
+		FALSE
+	)
 }
 #' @noRd
 filter_by_sex <- function(id) {
-  checkboxInput(
-    id,
-    "Filter by sex?",
-    FALSE
-  )
+	checkboxInput(
+		id,
+		"Filter by sex?",
+		FALSE
+	)
 }
 
 #' Group By sex checkbox
@@ -55,12 +55,12 @@ filter_by_sex <- function(id) {
 #' @examples
 #' group_by_sex("pif")
 group_by_sex <- function(
-  id) {
-  shiny::checkboxInput(
-    id,
-    "Group by sex?",
-    FALSE
-  )
+	id) {
+	shiny::checkboxInput(
+		id,
+		"Group by sex?",
+		FALSE
+	)
 }
 
 #' render_button
@@ -69,11 +69,11 @@ group_by_sex <- function(
 #' @examples
 #' render_button("pif")
 render_button <- function(id) {
-  sk_button(
-    id,
-    "Render",
-    icon = icon("refresh")
-  )
+	sk_button(
+		id,
+		"Render",
+		icon = icon("refresh")
+	)
 }
 
 #' Title
@@ -82,18 +82,18 @@ render_button <- function(id) {
 #' @examples
 #' select_a_dep("pif")
 select_a_dep <- function(id) {
-  selectInput(
-    id,
-    "Department",
-    choices = prenomsapp::deps
-  )
+	selectInput(
+		id,
+		"Department",
+		choices = prenomsapp::deps
+	)
 }
 select_a_sex <- function(id) {
-  selectInput(
-    id,
-    "Sex",
-    choices = c("M", "F")
-  )
+	selectInput(
+		id,
+		"Sex",
+		choices = c("M", "F")
+	)
 }
 
 #' select_a_name
@@ -102,11 +102,11 @@ select_a_sex <- function(id) {
 #' @examples
 #' select_a_name("pif")
 select_a_name <- function(id) {
-  textInput(
-    id,
-    "Name",
-    value = "Colin"
-  )
+	textInput(
+		id,
+		"Name",
+		value = "Colin"
+	)
 }
 
 #' ui element for selecting in prenoms
@@ -116,27 +116,27 @@ select_a_name <- function(id) {
 #' @examples
 #' slider_date_prenoms("pif")
 select_date_prenoms <- function(
-  id) {
-  shiny::selectInput(
-    id,
-    "Year:",
-    choices = 1900:2017,
-    selected = 1900
-  )
+	id) {
+	shiny::selectInput(
+		id,
+		"Year:",
+		choices = 1900:2017,
+		selected = 1900
+	)
 }
 
 #' @noRd
 #'
 slider_date_prenoms <- function(
-  id) {
-  shiny::sliderInput(
-    id,
-    "Dates:",
-    value = c(
-      min(prenomsapp::prenoms_dates),
-      max(prenomsapp::prenoms_dates)
-    ),
-    min = min(prenomsapp::prenoms_dates),
-    max = max(prenomsapp::prenoms_dates)
-  )
+	id) {
+	shiny::sliderInput(
+		id,
+		"Dates:",
+		value = c(
+			min(prenomsapp::prenoms_dates),
+			max(prenomsapp::prenoms_dates)
+		),
+		min = min(prenomsapp::prenoms_dates),
+		max = max(prenomsapp::prenoms_dates)
+	)
 }

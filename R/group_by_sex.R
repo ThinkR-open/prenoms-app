@@ -6,10 +6,10 @@
 #' @examples
 #' group_by_sex("pif")
 group_by_sex <- function(
-  id) {
-  shiny::checkboxInput(
-    id,
-    "Group by sex?",
-    FALSE
-  )
+	id) {
+	shiny::checkboxInput(
+		id,
+		"Group by sex?",
+		FALSE
+	)
 }
